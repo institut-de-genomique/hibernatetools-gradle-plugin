@@ -1,13 +1,13 @@
-== Hibernatetools-gradle-plugins ==
+# Hibernatetools-gradle-plugins
 
-=== Purpose ===
+## Purpose
 
 This plugin intend to ease hibernatetools through gradle. It offer three tasks:
-# hibernate-config: to generate hibernate config files
-# hbm2java: to generate DAO classes
-# hbm2dao: to generate java classes
+- hibernate-config: to generate hibernate config files
+- hbm2java: to generate DAO classes
+- hbm2dao: to generate java classes
 
-=== Installation ===
+## Installation
 
 Put the plugins inside you local .m2 directory:
 
@@ -17,7 +17,7 @@ $ cd
 $ gradle publishToMavenLocal
 ```
 
-=== Usage ===
+## Usage
 
 Inside your build.gradle file add this:
 
@@ -68,4 +68,4 @@ database {
 }
 ```
 
-dialect and driver to use are located on (hibernate)[http://www.tutorialspoint.com/hibernate/hibernate_configuration.htm]
+dialect and driver to use are located on [hibernate](http://www.tutorialspoint.com/hibernate/hibernate_configuration.htm])

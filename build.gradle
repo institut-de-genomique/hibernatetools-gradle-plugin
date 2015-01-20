@@ -1,0 +1,61 @@
+apply plugin: "groovy"
+apply plugin: "maven-publish"
+apply plugin: "idea"
+
+import java.text.SimpleDateFormat
+
+
+group                   = "org.hibernate.gradle.tools"
+version                 = "0.1.0"
+
+wrapper.gradleVersion  = "2.2.1"
+
+jar {
+    manifest {
+        attributes( "Implementation-Title":         rootProject.name,
+                    "Implementation-Version":       version,
+                    "Implementation-Vendor":        "Genoscope, LABGeM",
+                    "Implementation-Class":         "org.hibernate.gradle.tools.HibernatePlugin",
+                    "description":                  "Hibernate tools plugin to reverse engineering database.",
+                    "Main-Class":                   "org.hibernate.gradle.tools.HibernatePlugin",
+                    "Build-Date":                   new SimpleDateFormat("yyyy-MM-dd").format(new Date()),
+                    "Build-JDK":                    System.getProperty("java.version"),
+                    "Build-Gradle":                 project.gradle.gradleVersion
+                   )
+    }
+}
+
+task packageJavadoc(type: Jar, dependsOn: "javadoc") {
+    from javadoc.destinationDir
+    classifier = "javadoc"
+}
+
+task packageSources(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = "sources"
+}
+
+artifacts {
+    archives jar
+    archives packageJavadoc
+    archives packageSources
+}
+
+dependencies {
+    repositories {
+        mavenCentral()
+    }
+    compile gradleApi()
+    compile localGroovy()
+}
+
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+

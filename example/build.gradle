@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath   "org.hibernate.gradle.tools:hibernatetools-gradle-plugin:0.1.0"
+    }
+}
+apply plugin: "hibernatetools-gradle-plugin"
+apply plugin: "java"
+
+dependencies{
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    compile 'org.hibernate:hibernate-entitymanager:4.3.7.Final'
+    compile 'org.hibernate:hibernate-core:4.3.7.Final'
+    compile 'mysql:mysql-connector-java:5.1.34'
+    compile 'org.apache.commons:commons-dbcp2:2.0.1'
+}
+
+
+task packageJavadoc(type: Jar, dependsOn: 'javadoc') {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+task packageSources(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+    archives packageJavadoc
+    archives packageSources
+}
+
+jar {
+    manifest.attributes provider: 'someone'
+    baseName = 'myProject'
+    version = '0.1.0-SNAPSHOT'
+}
+
+database{
+    name        = "myDB"
+    url         = "jdbc:mysql://myDB.domain.fr"
+}

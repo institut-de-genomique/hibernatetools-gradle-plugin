@@ -12,8 +12,8 @@ This plugin intend to ease hibernatetools through gradle. It offer three tasks:
 Put the plugins inside you local .m2 directory:
 
 ```
-$ git clone 
-$ cd 
+$ git clone https://github.com/institut-de-genomique/hibernatetools-gradle-plugin.git
+$ cd hibernatetools-gradle-plugin
 $ gradle publishToMavenLocal
 ```
 
@@ -69,3 +69,18 @@ database {
 ```
 
 dialect and driver to use are located on [hibernate](http://www.tutorialspoint.com/hibernate/hibernate_configuration.htm])
+
+### Reverse engineering
+
+Once the plugin is declared and database connection defined to get java classes you need only to run this command:
+
+```
+$ gradle hbm2java
+```
+
+This plugin provides three gradle target:
+- hbm2java
+- hbm2dao
+- hibernate-config
+
+enjoy

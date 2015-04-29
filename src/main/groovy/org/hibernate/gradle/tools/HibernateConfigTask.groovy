@@ -50,7 +50,7 @@ class HibernateConfigTask extends DefaultTask {
 
 
     @TaskAction
-    def run(){        
+    def run(){
             config.configDir.exists()    || config.configDir.mkdirs()
             config.srcGeneratedDir.exists() || config.srcGeneratedDir.mkdirs()
             if( ! config.hibernateRevEngXml.exists() ){
@@ -100,10 +100,20 @@ class HibernateConfigTask extends DefaultTask {
     SYSTEM "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 
 <hibernate-reverse-engineering>
-    <schema-selection match-schema="${project.database.schema}" match-table="${project.database.tables}"/>
-</hibernate-reverse-engineering>
 """
         )
+        project.database.tables.split(",").each{
+            config.hibernateRevEngXml.append(
+"""
+    <schema-selection match-schema="${project.database.schema}" match-table="${it}"/>
+"""
+            )
+        }
+        config.hibernateRevEngXml.append(
+"""
+</hibernate-reverse-engineering>
+"""
+            )
 
     }
 

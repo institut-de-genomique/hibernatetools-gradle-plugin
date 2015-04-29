@@ -48,8 +48,24 @@ database{
 database{
     name        = "myDB"
     basePackage = "org.foo.bar"
+    schema      = "myDB"
 }
 ```
+
+This plugin allow to specify multiple tables using comma as separator:
+
+```
+database{
+    name        = "myDB"
+    basePackage = "org.foo.bar"
+    tables      = "foo,bar,other*"
+}
+
+```
+
+The symbol * means any characters. In given example class will be mapped from foo and bar  tables and also any table where name start with other
+
+
 
 by default database section are defined as:
 

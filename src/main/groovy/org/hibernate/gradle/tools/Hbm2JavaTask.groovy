@@ -1,9 +1,7 @@
 package org.hibernate.gradle.tools
-
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskAction
-
 /*
  * Copyright LABGeM 20/01/15
  *
@@ -55,7 +53,7 @@ class Hbm2JavaTask  extends DefaultTask{
                     classname: "org.hibernate.tool.ant.HibernateToolTask",
                     classpath: config.classPath
             )
-            hibernatetool( destdir : config.srcGeneratedDir, templatepath : 'templates' ) {
+            hibernatetool( destdir : config.javaSrcGeneratedDir, templatepath : 'templates' ) {
                 jdbcconfiguration(
                         configurationfile: "${config.hibernateConfigXml.path}",
                         revengfile: "${config.hibernateRevEngXml.path}",

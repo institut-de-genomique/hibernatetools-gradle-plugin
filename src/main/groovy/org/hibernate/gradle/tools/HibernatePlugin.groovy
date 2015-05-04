@@ -1,5 +1,7 @@
 package org.hibernate.gradle.tools
-
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPlugin
 /*
  * Copyright LABGeM 15/01/15
  *
@@ -34,10 +36,6 @@ package org.hibernate.gradle.tools
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPlugin
-
 class HibernatePlugin implements Plugin<Project>{
 
     @Override
@@ -50,12 +48,8 @@ class HibernatePlugin implements Plugin<Project>{
         configuration.dependencies.add(project.dependencies.create('org.hibernate:hibernate-tools:4.3.1.CR1'))
         configuration.dependencies.add(project.dependencies.create('org.slf4j:slf4j-simple:1.7.5'))
         configuration.dependencies.add(project.dependencies.create('mysql:mysql-connector-java:5.1.34'))
-        def configDir = new File( "${project.projectDir}${File.separator}config" )
         def conf = new Config(
-                                new File( "${configDir.path}${File.separator}hibernate.reveng.xml" ),
-                                new File( "${configDir.path}${File.separator}hibernate.cfg.xml" ),
-                                new File( "${project.buildDir}${File.separator}generated" ),
-                                configDir,
+                                new File( "${project.buildDir}${File.separator}generated/src/" ),
                                 configuration.asPath
                              )
         project.task("hibernate-config", type: HibernateConfigTask ) {
@@ -73,6 +67,7 @@ class HibernatePlugin implements Plugin<Project>{
             inputs.files conf.hibernateRevEngXml
             outputs.dir  conf.srcGeneratedDir
         }
+
     }
 }
 
@@ -81,14 +76,16 @@ class Config{
     def File   hibernateRevEngXml
     def File   hibernateConfigXml
     def File   srcGeneratedDir
-    def File   configDir
+    def File   javaSrcGeneratedDir
+    def File   resourcesSrcGeneratedDir
     def String classPath
 
-    public Config(final File hibernateRevEngXml,final File hibernateConfigXml, final File srcGeneratedDir,  final File configDir, final String classPath ){
-        this.hibernateRevEngXml  = hibernateRevEngXml
-        this.hibernateConfigXml  = hibernateConfigXml
-        this.srcGeneratedDir     = srcGeneratedDir
-        this.configDir           = configDir
-        this.classPath           = classPath
+    public Config(final File srcGeneratedDir, final String classPath ){
+        this.srcGeneratedDir            = srcGeneratedDir
+        this.javaSrcGeneratedDir        = new File(srcGeneratedDir,"java")
+        this.resourcesSrcGeneratedDir   = new File(srcGeneratedDir,"resources")
+        this.hibernateRevEngXml         = new File(resourcesSrcGeneratedDir,"hibernate.reveng.xml")
+        this.hibernateConfigXml         = new File(resourcesSrcGeneratedDir,"hibernate.cfg.xml")
+        this.classPath                  = classPath
     }
 }

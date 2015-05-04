@@ -43,15 +43,13 @@ class HibernateConfigTask extends DefaultTask {
     def boolean enabled     = true
     def String  description = "Generate hibernate config files"
     def String  group       = "hibernatetools"
-    
-
     def Config config
 
 
 
     @TaskAction
     def run(){
-            config.configDir.exists()    || config.configDir.mkdirs()
+            config.resourcesSrcGeneratedDir.exists()    || config.resourcesSrcGeneratedDir.mkdirs()
             config.srcGeneratedDir.exists() || config.srcGeneratedDir.mkdirs()
             if( ! config.hibernateRevEngXml.exists() ){
                 checkDataBase( project )

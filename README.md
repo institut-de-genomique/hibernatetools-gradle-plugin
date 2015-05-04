@@ -4,8 +4,8 @@
 
 This plugin intend to ease hibernatetools through gradle. It offer three tasks:
 - hibernate-config: to generate hibernate config files
-- hbm2java: to generate DAO classes
-- hbm2dao: to generate java classes
+- hbm2java: to generate java classes
+- hbm2dao: to generate DAO classes
 
 ## Installation
 
@@ -32,6 +32,23 @@ buildscript {
     }
 }
 apply plugin: "hibernatetools-gradle-plugin"
+
+sourceSets {
+    generated{
+        java.srcDir "${buildDir}/generated/src/"
+    }
+}
+
+
+compileGeneratedJava{
+    dependsOn(hbm2dao)
+    classpath = configurations.compile
+}
+compileJava{
+    dependsOn(compileGeneratedJava)
+    source    += sourceSets.generated.java
+}
+
 ```
 
 Now you have only to configure the database, by using database section inside build.gradle file.
@@ -91,7 +108,7 @@ dialect and driver to use are located on [hibernate](http://www.tutorialspoint.c
 Once the plugin is declared and database connection defined to get java classes you need only to run this command:
 
 ```
-$ gradle hbm2java
+$ gradle hbm2dao
 ```
 
 This plugin provides three gradle target:

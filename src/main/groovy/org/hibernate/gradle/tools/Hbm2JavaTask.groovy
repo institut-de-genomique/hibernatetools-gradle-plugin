@@ -57,9 +57,9 @@ class Hbm2JavaTask  extends DefaultTask{
             )
             hibernatetool( destdir : config.srcGeneratedDir, templatepath : 'templates' ) {
                 jdbcconfiguration(
-                        configurationfile:  "${config.hibernateConfigXml.path}",
-                        revengfile:         "${config.hibernateRevEngXml.path}",
-                        packagename:        "${project.database.basePackage}.model"
+                        configurationfile: "${config.hibernateConfigXml.path}",
+                        revengfile: "${config.hibernateRevEngXml.path}",
+                        packagename: "${project.database.basePackage}"
                 )
                 hbm2java(
                         jdk5: true,

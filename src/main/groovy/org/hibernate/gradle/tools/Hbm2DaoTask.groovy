@@ -50,16 +50,17 @@ class Hbm2DaoTask  extends DefaultTask{
     }
 
     def hbm2dao(final Project project){
+        def packagePath = project.database.basePackage.replaceAll('\\.', '/')
         project.ant {
             taskdef(name: "hibernatetool",
                     classname: "org.hibernate.tool.ant.HibernateToolTask",
                     classpath: config.classPath
             )
-            hibernatetool( destdir : config.srcGeneratedDir, templatepath : 'templates' ) {
+            hibernatetool( destdir : config.srcGeneratedDir ) {
                 jdbcconfiguration(
                         configurationfile:  "${config.hibernateConfigXml.path}",
                         revengfile:         "${config.hibernateRevEngXml.path}",
-                        packagename:        "${project.database.basePackage}.dao"
+                        packagename:        "${project.database.basePackage}"
                 )
                 hbm2dao(
                         jdk5: true,

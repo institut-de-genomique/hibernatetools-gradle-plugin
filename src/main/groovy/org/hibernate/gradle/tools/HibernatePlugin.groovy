@@ -48,8 +48,9 @@ class HibernatePlugin implements Plugin<Project>{
         configuration.dependencies.add(project.dependencies.create('org.hibernate:hibernate-tools:4.3.1.CR1'))
         configuration.dependencies.add(project.dependencies.create('org.slf4j:slf4j-simple:1.7.5'))
         configuration.dependencies.add(project.dependencies.create('mysql:mysql-connector-java:5.1.34'))
+        addGeneratedToSource( project )
         def conf = new Config(
-                                new File( "${project.buildDir}${File.separator}generated/src/" ),
+                                new File( "${project.buildDir}${File.separator}generated${File.separator}src${File.separator}" ),
                                 configuration.asPath
                              )
         project.task("hibernate-config", type: HibernateConfigTask ) {
@@ -67,7 +68,13 @@ class HibernatePlugin implements Plugin<Project>{
             inputs.files conf.hibernateRevEngXml
             outputs.dir  conf.srcGeneratedDir
         }
+    }
 
+    void addGeneratedToSource(Project project) {
+
+        project.sourceSets.matching { it.name == "main" } .all {
+            it.java.srcDir "${project.buildDir}${File.separator}generated${File.separator}src${File.separator}java"
+        }
     }
 }
 

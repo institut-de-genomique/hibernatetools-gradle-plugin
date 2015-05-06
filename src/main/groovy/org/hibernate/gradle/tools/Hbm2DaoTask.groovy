@@ -2,6 +2,7 @@ package org.hibernate.gradle.tools
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.tasks.TaskAction
 
 /*
@@ -46,6 +47,8 @@ class Hbm2DaoTask  extends DefaultTask{
 
     @TaskAction
     def run(){
+        Task compileJava = project.getTasksByName('compileJava',false).iterator().next()
+        compileJava.dependsOn('hbm2dao')
         hbm2dao(project)
     }
 

@@ -1,6 +1,7 @@
 package org.hibernate.gradle.tools
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.tasks.TaskAction
 /*
  * Copyright LABGeM 20/01/15
@@ -44,6 +45,8 @@ class Hbm2JavaTask  extends DefaultTask{
 
     @TaskAction
     def run(){
+        Task compileJava = project.getTasksByName('compileJava',false).iterator().next()
+        compileJava.dependsOn('hbm2java')
         hbm2java(project)
     }
 

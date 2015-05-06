@@ -32,23 +32,6 @@ buildscript {
     }
 }
 apply plugin: "hibernatetools-gradle-plugin"
-
-sourceSets {
-    generated{
-        java.srcDir "${buildDir}/generated/src/"
-    }
-}
-
-
-compileGeneratedJava{
-    dependsOn(hbm2dao)
-    classpath = configurations.compile
-}
-compileJava{
-    dependsOn(compileGeneratedJava)
-    source    += sourceSets.generated.java
-}
-
 ```
 
 Now you have only to configure the database, by using database section inside build.gradle file.

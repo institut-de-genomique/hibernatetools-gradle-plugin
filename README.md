@@ -11,7 +11,9 @@ This plugin intend to ease hibernatetools through gradle. It offer three tasks:
 
 Inside your build.gradle file add this:
 
-### Build script snippet for use in all Gradle versions:
+### Build script snippet
+
+#### For use in all Gradle versions:
 ```groovy
 buildscript {
   repositories {
@@ -27,12 +29,14 @@ buildscript {
 apply plugin: "org.hibernate.gradle.tools"
 ```
 
-### Build script snippet for new, incubating, plugin mechanism introduced in Gradle 2.1:
+#### For new, incubating, plugin mechanism introduced in Gradle 2.1:
 ```groovy
 plugins {
       id "org.hibernate.gradle.tools" version "1.2.2"
     }
 ```
+
+#### Configure the database
 
 Now you have only to configure the database, by using database section inside build.gradle file.
 Example:

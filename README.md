@@ -55,7 +55,7 @@ This plugin allow to specify multiple catalog using:
 import org.hibernate.gradle.tools.*
 
 database{
-    catalog = [ "catalog1": new Schema("schemaY", ".*")), "catalog2": new Schema("schemaX", "*") ]
+    catalog = [ "catalog1": new Schema("schemaY", [".*"])), "catalog2": new Schema("schemaX", [".*"]) ]
     basePackage = "org.foo.bar"
 }
 ```
@@ -64,7 +64,7 @@ This plugin allow to specify multiple schema using:
 
 ```groovy
 database{
-    catalog = [ "catalog1": new Schema("schemaX", ["tableY"]), "catalog2": new Schema("schemaY", ["".*"]) ]
+    catalog = [ "catalog1": new Schema("schemaX", ["tableY"]), "catalog2": new Schema("schemaY", [".*"]) ]
     basePackage = "org.foo.bar"
 }
 
@@ -80,7 +80,7 @@ database{
 
 ```
 
-The symbol * means any characters. In given example class will be mapped from foo and bar  tables and also any table where name start with other
+The symbol '.*' means any characters repeated 0 on n times. In given example class will be mapped from foo and bar  tables and also any table where name start with other
 
 
 

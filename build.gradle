@@ -13,7 +13,7 @@ apply plugin: "com.gradle.plugin-publish"
 apply plugin: "groovy"
 apply plugin: "idea"
 
-version = '1.2.0'
+version = '1.2.1'
 
 repositories {
   jcenter()

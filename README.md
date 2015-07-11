@@ -28,7 +28,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath   "org.hibernate.gradle.tools:hibernatetools-gradle-plugin:0.1.0"
+        classpath   "org.hibernate.gradle.tools:hibernatetools-gradle-plugin:1.0.0"
     }
 }
 apply plugin: "hibernatetools-gradle-plugin"
@@ -44,21 +44,24 @@ database{
 }
 ```
 
+This plugin allow to specify multiple catalog using:
+
+
 ```
+import org.hibernate.gradle.tools.*
+
 database{
-    name        = "myDB"
+    catalog = [ "catalog1": new Schema("schemaY", ".*")), "catalog2": new Schema("schemaX", "*") ]
     basePackage = "org.foo.bar"
-    schema      = "myDB"
 }
 ```
 
-This plugin allow to specify multiple tables using comma as separator:
+This plugin allow to specify multiple tables using:
 
 ```
 database{
-    name        = "myDB"
+    catalog = [ "catalog1": new Schema("schemaX", "tableY"), "catalog2": new Schema("schemaY", ".*") ]
     basePackage = "org.foo.bar"
-    tables      = "foo,bar,other*"
 }
 
 ```
@@ -70,21 +73,24 @@ The symbol * means any characters. In given example class will be mapped from fo
 by default database section are defined as:
 
 ```
-database {
-    name        = ""
-    tables      = ".*"
-    schema      = ".*"
-    user        = ""
-    password    = ""
-    url         = "jdbc:mysql://127.0.0.1"
-    port        = 3306
-    basePackage = "com.project.database"
-    driver      = "com.mysql.jdbc.Driver"
-    dialect     = "org.hibernate.dialect.MySQLDialect"
+class Database {
+    def catalog         = [".*":new Schema(".*", ".*")] // Schema parameter are: schema pattern name, table pattern name
+    String  user        = ""
+    String  password    = ""
+    String  url         = "jdbc:mysql://127.0.0.1"
+    Integer port        = 3306
+    String  driver      = "com.mysql.jdbc.Driver"
+    String  dialect     = "org.hibernate.dialect.MySQLDialect"
+    String  basePackage = "com.project.database.model"
 }
 ```
 
+
 dialect and driver to use are located on [hibernate](http://www.tutorialspoint.com/hibernate/hibernate_configuration.htm])
+
+### TODO
+
+Add support multiple schema selection from a same catalog
 
 ### Reverse engineering
 

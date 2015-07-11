@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath   "org.hibernate.gradle.tools:hibernatetools-gradle-plugin:0.1.0"
+        classpath   "org.hibernate.gradle.tools:hibernatetools-gradle-plugin:1.0.0"
     }
 }
 apply plugin: "hibernatetools-gradle-plugin"
@@ -44,7 +44,9 @@ jar {
     version = '0.1.0-SNAPSHOT'
 }
 
+import org.hibernate.gradle.tools.*
+
 database{
-    name        = "myDB"
+    catalog = [ "schema1": new Schema(), "schema2": new Schema() ]
     url         = "jdbc:mysql://myDB.domain.fr"
 }

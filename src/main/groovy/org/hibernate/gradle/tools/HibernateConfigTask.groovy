@@ -79,7 +79,7 @@ class HibernateConfigTask extends DefaultTask {
     <session-factory>
         <property name="hibernate.dialect">${project.database.dialect}</property>
         <property name="hibernate.connection.driver_class">${project.database.driver}</property>
-        <property name="hibernate.connection.url">${project.database.url}:${project.database.port}/${project.database.name}</property>
+        <property name="hibernate.connection.url">${project.database.url}:${project.database.port}</property>
         <property name="hibernate.connection.username">${project.database.user}</property>
         <property name="hibernate.connection.password">${project.database.password}</property>
         <property name="hibernate.current_session_context_class">thread</property>
@@ -100,12 +100,14 @@ class HibernateConfigTask extends DefaultTask {
 <hibernate-reverse-engineering>
 """
         )
-        project.database.tables.split(",").each{
-            config.hibernateRevEngXml.append(
+        project.database.catalog.each{ catalogName, schema ->
+            schema.tables.each{ tableName ->
+                config.hibernateRevEngXml.append(
 """
-    <schema-selection match-schema="${project.database.schema}" match-table="${it}"/>
+    <schema-selection match-catalog ="${catalogName}" match-schema="$schema.name}" match-table="${tableName}"/>
 """
-            )
+                )
+            }
         }
         config.hibernateRevEngXml.append(
 """

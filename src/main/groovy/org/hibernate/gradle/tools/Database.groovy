@@ -34,15 +34,28 @@ package org.hibernate.gradle.tools
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
+class Schema {
+    String   name       = ".*"
+    String[]  tables    = ".*"
+
+    Schema( String  name, String[] tables ){
+        this.name   = name;
+        this.tables = tables;
+    }
+
+    Schema( ){
+        this.name   = ".*";
+        this.tables = [".*"];
+    }
+}
+
 class Database {
-    String  name        = ""
-    String  tables      = ".*"
-    String  schema      = ".*"
+    def catalog         = [".*":new Schema()]
     String  user        = ""
     String  password    = ""
     String  url         = "jdbc:mysql://127.0.0.1"
     Integer port        = 3306
-    String  basePackage = "com.project.database.model"
     String  driver      = "com.mysql.jdbc.Driver"
     String  dialect     = "org.hibernate.dialect.MySQLDialect"
+    String  basePackage = "com.project.database.model"
 }

@@ -7,37 +7,37 @@ This plugin intend to ease hibernatetools through gradle. It offer three tasks:
 - hbm2java: to generate java classes
 - hbm2dao: to generate DAO classes
 
-## Installation
-
-Put the plugins inside you local .m2 directory:
-
-```
-$ git clone https://github.com/institut-de-genomique/hibernatetools-gradle-plugin.git
-$ cd hibernatetools-gradle-plugin
-$ gradle publishToMavenLocal
-```
-
 ## Usage
 
 Inside your build.gradle file add this:
 
-```
+### Build script snippet for use in all Gradle versions:
+```groovy
 buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
     }
-    dependencies {
-        classpath   "org.hibernate.gradle.tools:hibernatetools-gradle-plugin:1.0.0"
-    }
+  }
+  dependencies {
+    classpath "gradle.plugin.org.hibernate.gradle.tools:hibernatetools-gradle-plugin:1.2.2"
+  }
 }
-apply plugin: "hibernatetools-gradle-plugin"
+
+apply plugin: "org.hibernate.gradle.tools"
+```
+
+### Build script snippet for new, incubating, plugin mechanism introduced in Gradle 2.1:
+```groovy
+plugins {
+      id "org.hibernate.gradle.tools" version "1.2.2"
+    }
 ```
 
 Now you have only to configure the database, by using database section inside build.gradle file.
 Example:
 
-```
+```groovy
 database{
     name        = "myDB"
     url         = "jdbc:mysql://myDB.domain.fr"
@@ -47,7 +47,7 @@ database{
 This plugin allow to specify multiple catalog using:
 
 
-```
+```groovy
 import org.hibernate.gradle.tools.*
 
 database{
@@ -58,7 +58,7 @@ database{
 
 This plugin allow to specify multiple schema using:
 
-```
+```groovy
 database{
     catalog = [ "catalog1": new Schema("schemaX", ["tableY"]), "catalog2": new Schema("schemaY", ["".*"]) ]
     basePackage = "org.foo.bar"
@@ -68,7 +68,7 @@ database{
 
 This plugin allow to specify multiple tables using:
 
-```
+```groovy
 database{
     catalog = [ "catalog1": new Schema("schemaX", ["tableY","tableZ"]), "catalog2": new Schema("schemaY", [".*"]) ]
     basePackage = "org.foo.bar"
@@ -82,7 +82,7 @@ The symbol * means any characters. In given example class will be mapped from fo
 
 by default database section are defined as:
 
-```
+```groovy
 class Database {
     def catalog         = [".*":new Schema(".*", ".*")] // Schema parameter are: schema pattern name, table pattern name
     String  user        = ""
@@ -102,7 +102,7 @@ dialect and driver to use are located on [hibernate](http://www.tutorialspoint.c
 
 Once the plugin is declared and database connection defined to get java classes you need only to run this command:
 
-```
+```bash
 $ gradle hbm2dao
 ```
 

@@ -56,11 +56,21 @@ database{
 }
 ```
 
+This plugin allow to specify multiple schema using:
+
+```
+database{
+    catalog = [ "catalog1": new Schema("schemaX", ["tableY"]), "catalog2": new Schema("schemaY", ["".*"]) ]
+    basePackage = "org.foo.bar"
+}
+
+```
+
 This plugin allow to specify multiple tables using:
 
 ```
 database{
-    catalog = [ "catalog1": new Schema("schemaX", "tableY"), "catalog2": new Schema("schemaY", ".*") ]
+    catalog = [ "catalog1": new Schema("schemaX", ["tableY","tableZ"]), "catalog2": new Schema("schemaY", [".*"]) ]
     basePackage = "org.foo.bar"
 }
 
@@ -87,10 +97,6 @@ class Database {
 
 
 dialect and driver to use are located on [hibernate](http://www.tutorialspoint.com/hibernate/hibernate_configuration.htm])
-
-### TODO
-
-Add support multiple schema selection from a same catalog
 
 ### Reverse engineering
 

@@ -38,7 +38,7 @@ pluginBundle {
     hibernatetoolsPlugin {
       id = 'org.hibernate.gradle.tools'
       displayName = 'Gradle hibernatetools plugin'
-      tags = ['hibernate', 'orn', 'databse', 'reverse engeneering']
+      tags = ['hibernate', 'orm', 'databse', 'reverse engeneering']
       version = version
     }
   }

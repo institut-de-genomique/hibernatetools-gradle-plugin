@@ -43,7 +43,7 @@ Example:
 
 ```groovy
 database{
-    name        = "myDB"
+    basePackage = "com.project.database.model"
     url         = "jdbc:mysql://myDB.domain.fr"
 }
 ```

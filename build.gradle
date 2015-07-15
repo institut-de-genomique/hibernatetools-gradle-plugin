@@ -13,7 +13,7 @@ apply plugin: "com.gradle.plugin-publish"
 apply plugin: "groovy"
 apply plugin: "idea"
 
-version = '1.2.2'
+version = '1.2.3'
 
 repositories {
   jcenter()
@@ -33,8 +33,6 @@ pluginBundle {
 
 
   plugins {
-
-    // first plugin
     hibernatetoolsPlugin {
       id = 'org.hibernate.gradle.tools'
       displayName = 'Gradle hibernatetools plugin'

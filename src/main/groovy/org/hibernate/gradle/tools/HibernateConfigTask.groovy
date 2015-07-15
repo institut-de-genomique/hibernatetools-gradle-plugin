@@ -104,10 +104,15 @@ class HibernateConfigTask extends DefaultTask {
             schema.tables.each{ tableName ->
                 config.hibernateRevEngXml.append(
 """
-    <schema-selection match-catalog ="${catalogName}" match-schema="$schema.name}" match-table="${tableName}"/>
+    <schema-selection match-catalog ="${catalogName}" match-schema="${schema.name}" match-table="${tableName}"/>
 """
                 )
             }
+            config.hibernateRevEngXml.append(
+"""
+    <table-filter match-catalog ="${catalogName}" package="${project.basePackage}.${catalogName}" />
+"""
+            )
         }
         config.hibernateRevEngXml.append(
 """

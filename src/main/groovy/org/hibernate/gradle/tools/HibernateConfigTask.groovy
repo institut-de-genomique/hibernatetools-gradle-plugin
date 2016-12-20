@@ -38,6 +38,7 @@ package org.hibernate.gradle.tools
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskAction
+import groovy.swing.SwingBuilder
 
 class HibernateConfigTask extends DefaultTask {
     def boolean enabled     = true
@@ -60,13 +61,34 @@ class HibernateConfigTask extends DefaultTask {
 
     def checkDataBase(Project project){
         def console = System.console()
-        console.writer().println()
-        console.writer().println("== User definition ==")
-        if( project.database.user == "" )
-            project.database.user = console.readLine('> Please enter your username: ')
-        if( project.database.password == "" )
-            project.database.password = new String(console.readPassword('> Please enter your password: '))
-        console.writer().println("========")
+        if( console == null ){
+            new SwingBuilder().edt {
+                dialog(modal: true, title: 'Enter password', alwaysOnTop: true, resizable: false, locationRelativeTo: null, pack: true, show: true) {
+                    vbox { // Put everything below each other
+                        label(text: "Please enter your username:")
+                        textField(id: 'usernameField' )
+                        label(text: "Please enter your password:")
+                        passwordField( id: 'passwordField')
+                        button(defaultButton: true, text: 'OK', actionPerformed: {
+                            //project.database.user       = input1.password;
+                            //project.database.password   = input2.password;
+                            dispose();
+                        })
+                        bind(source:usernameField, sourceProperty:'text', target:project.database, targetProperty:'user') 
+                        bind(source:passwordField, sourceProperty:'text', target:project.database, targetProperty:'password') 
+                    }
+                }
+            }
+        }
+        else{
+            console.writer().println()
+            console.writer().println("== User definition ==")
+            if( project.database.user == "" )
+                project.database.user = console.readLine('> Please enter your username: ')
+            if( project.database.password == "" )
+                project.database.password = new String(console.readPassword('> Please enter your password: '))
+            console.writer().println("========")
+        }
     }
 
     def writeHibernateConfigFile(Project project){

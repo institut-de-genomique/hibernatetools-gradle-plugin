@@ -1,11 +1,5 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-    dependencies {
-        classpath   "org.hibernate.gradle.tools:hibernatetools-gradle-plugin:1.2.0"
-    }
+plugins {
+  id "org.hibernate.gradle.tools" version "1.2.4"
 }
 apply plugin: "hibernatetools-gradle-plugin"
 apply plugin: "java"
@@ -44,6 +38,7 @@ jar {
     version = '0.1.0-SNAPSHOT'
 }
 
+// >>>> Important <<<<
 import org.hibernate.gradle.tools.*
 
 database{

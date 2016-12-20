@@ -5,7 +5,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "com.gradle.publish:plugin-publish-plugin:0.9.1"
+    classpath "com.gradle.publish:plugin-publish-plugin:0.9.7"
   }
 }
 
@@ -13,8 +13,9 @@ apply plugin: "com.gradle.plugin-publish"
 apply plugin: "groovy"
 apply plugin: "idea"
 apply plugin: "maven"
-group ='org.hibernate.gradle.tools'
-version = '1.2.3'
+
+group   ='org.hibernate.gradle.tools'
+version = '1.2.4'
 
 repositories {
   jcenter()
@@ -27,18 +28,18 @@ dependencies {
 
 pluginBundle {
 
-  website = 'https://github.com/institut-de-genomique/'
-  vcsUrl = 'https://github.com/institut-de-genomique/hibernatetools-gradle-plugin'
+  website   = 'https://github.com/institut-de-genomique/'
+  vcsUrl    = 'https://github.com/institut-de-genomique/hibernatetools-gradle-plugin'
 
   description = 'Hibernate tools plugin to reverse engineering database.'
 
 
   plugins {
     hibernatetoolsPlugin {
-      id = 'org.hibernate.gradle.tools'
-      displayName = 'Gradle hibernatetools plugin'
-      tags = ['hibernate', 'orm', 'databse', 'reverse engeneering']
-      version = version
+      id            = 'org.hibernate.gradle.tools'
+      displayName   = 'Gradle hibernatetools plugin'
+      tags          = ['hibernate', 'orm', 'databse', 'reverse engeneering']
+      version       = version
     }
   }
 
@@ -82,5 +83,5 @@ dependencies {
     }
     compile gradleApi()
     compile localGroovy()
-    runtime 'org.hibernate:hibernate-tools:4.3.1.CR1'
+    runtime group: 'org.hibernate'      , name: 'hibernate-tools'   , version: '4.3.1.CR1'
 }

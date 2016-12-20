@@ -15,7 +15,7 @@ apply plugin: "idea"
 apply plugin: "maven"
 
 group               = 'org.hibernate.gradle.tools'
-version             = '1.2.4'
+version             = '1.2.5'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 

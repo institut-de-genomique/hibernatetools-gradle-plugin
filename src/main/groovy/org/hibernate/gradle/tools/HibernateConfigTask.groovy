@@ -51,12 +51,22 @@ class HibernateConfigTask extends DefaultTask {
     @TaskAction
     def run(){
             config.resourcesSrcGeneratedDir.exists()    || config.resourcesSrcGeneratedDir.mkdirs()
-            config.srcGeneratedDir.exists() || config.srcGeneratedDir.mkdirs()
-            if( ! config.hibernateRevEngXml.exists() ){
-                checkDataBase( project )
-                writeRevengConfigFile(project)
+            config.srcGeneratedDir.exists()             || config.srcGeneratedDir.mkdirs()
+            
+            if( project.database.revEngXml.isEmpty() ){
+                if( ! config.hibernateRevEngXml.exists() ){
+                    checkDataBase( project )
+                    writeRevengConfigFile(project)
+                }
+                // else nothing to do
             }
-            config.hibernateConfigXml.exists() || writeHibernateConfigFile(project)
+            else
+                config.hibernateRevEngXml = new File(project.database.revEngXml)
+            
+            if( project.database.revEngXml.isEmpty() )
+                config.hibernateConfigXml.exists() || writeHibernateConfigFile(project)
+            else
+                config.hibernateConfigXml = new File(project.database.configXml)
     }
 
     def checkDataBase(Project project){

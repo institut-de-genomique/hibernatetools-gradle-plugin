@@ -58,4 +58,6 @@ class Database {
     String  driver      = "com.mysql.jdbc.Driver"
     String  dialect     = "org.hibernate.dialect.MySQLDialect"
     String  basePackage = "com.project.database.model"
+    String  revEngXml   = ""
+    String  configXml   = ""
 }

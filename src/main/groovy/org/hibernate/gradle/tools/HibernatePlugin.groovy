@@ -46,7 +46,7 @@ class HibernatePlugin implements Plugin<Project>{
         project.repositories.mavenCentral()
         project.afterEvaluate {
             def configuration = project.configurations.create('reveng')
-            configuration.dependencies.add(project.dependencies.create('org.hibernate:hibernate-tools:4.3.1.CR1'))
+            configuration.dependencies.add(project.dependencies.create('org.hibernate:hibernate-tools:5.2.0.Final'))
             configuration.dependencies.add(project.dependencies.create('org.slf4j:slf4j-simple:1.7.5'))
             configuration.extendsFrom(project.configurations.findByName('compile'))
             configuration.extendsFrom(project.configurations.findByName('runtime'))

@@ -13,7 +13,13 @@ Inside your build.gradle file add this:
 
 ### Build script snippet
 
-#### For use in all Gradle versions:
+#### For Gradle 2.1 and after:
+```groovy
+plugins {
+      id "org.hibernate.gradle.tools" version "1.2.4"
+    }
+```
+#### For older Gradle release:
 ```groovy
 buildscript {
   repositories {
@@ -22,19 +28,13 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.org.hibernate.gradle.tools:hibernatetools-gradle-plugin:1.2.2"
+    classpath "gradle.plugin.org.hibernate.gradle.tools:hibernatetools-gradle-plugin:1.2.4"
   }
 }
 
 apply plugin: "org.hibernate.gradle.tools"
 ```
 
-#### For new, incubating, plugin mechanism introduced in Gradle 2.1:
-```groovy
-plugins {
-      id "org.hibernate.gradle.tools" version "1.2.2"
-    }
-```
 
 #### Configure the database
 

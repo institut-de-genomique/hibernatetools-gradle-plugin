@@ -13,6 +13,7 @@ dependencies{
     compile 'org.hibernate:hibernate-core:4.3.7.Final'
     compile 'mysql:mysql-connector-java:5.1.34'
     compile 'org.apache.commons:commons-dbcp2:2.0.1'
+    compile 'mysql:mysql-connector-java:5.1.34' // <<---- or [runtime] depends of your needs
 }
 
 

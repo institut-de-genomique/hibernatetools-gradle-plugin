@@ -42,31 +42,33 @@ class HibernatePlugin implements Plugin<Project>{
     void apply(Project project) {
         project.plugins.apply JavaPlugin
         project.extensions.create( 'database', Database)
-        def configuration = project.configurations.create('reveng')
         project.repositories.mavenLocal()
         project.repositories.mavenCentral()
-        configuration.dependencies.add(project.dependencies.create('org.hibernate:hibernate-tools:4.3.1.CR1'))
-        configuration.dependencies.add(project.dependencies.create('org.slf4j:slf4j-simple:1.7.5'))
-        configuration.dependencies.add(project.dependencies.create('mysql:mysql-connector-java:5.1.34'))
-        addGeneratedToSource( project )
-        def conf = new Config(
-                                new File( "${project.buildDir}${File.separator}generated${File.separator}src${File.separator}" ),
-                                configuration.asPath
-                             )
-        project.task("hibernate-config", type: HibernateConfigTask ) {
+        project.afterEvaluate {
+            def configuration = project.configurations.create('reveng')
+            configuration.dependencies.add(project.dependencies.create('org.hibernate:hibernate-tools:4.3.1.CR1'))
+            configuration.dependencies.add(project.dependencies.create('org.slf4j:slf4j-simple:1.7.5'))
+            configuration.extendsFrom(project.configurations.findByName('compile'))
+            configuration.extendsFrom(project.configurations.findByName('runtime'))
+            def conf = new Config(
+                                    new File( "${project.buildDir}${File.separator}generated${File.separator}src${File.separator}" ),
+                                    configuration.asPath
+                                 )
+            project.task("hibernate-config", type: HibernateConfigTask ) {
+                    config = conf
+                    inputs.files conf.hibernateRevEngXml
+                    outputs.dir  conf.srcGeneratedDir
+            }
+            project.task("hbm2java", type: Hbm2JavaTask,dependsOn: "hibernate-config" ) {
                 config = conf
                 inputs.files conf.hibernateRevEngXml
                 outputs.dir  conf.srcGeneratedDir
-        }
-        project.task("hbm2java", type: Hbm2JavaTask,dependsOn: "hibernate-config" ) {
-            config = conf
-            inputs.files conf.hibernateRevEngXml
-            outputs.dir  conf.srcGeneratedDir
-        }
-        project.task("hbm2dao", type: Hbm2DaoTask,dependsOn:"hbm2java"  ) {
-            config = conf
-            inputs.files conf.hibernateRevEngXml
-            outputs.dir  conf.srcGeneratedDir
+            }
+            project.task("hbm2dao", type: Hbm2DaoTask,dependsOn:"hbm2java"  ) {
+                config = conf
+                inputs.files conf.hibernateRevEngXml
+                outputs.dir  conf.srcGeneratedDir
+            }
         }
     }
 

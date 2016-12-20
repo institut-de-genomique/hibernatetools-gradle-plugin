@@ -69,6 +69,7 @@ class HibernatePlugin implements Plugin<Project>{
                 inputs.files conf.hibernateRevEngXml
                 outputs.dir  conf.srcGeneratedDir
             }
+            addGeneratedToSource(project)
         }
     }
 

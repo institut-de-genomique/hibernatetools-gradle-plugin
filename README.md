@@ -83,6 +83,15 @@ database{
 The symbol '.*' means any characters repeated 0 on n times. In given example class will be mapped from foo and bar  tables and also any table where name start with other
 
 
+You want to provides your reveng and config xml files :
+
+
+```groovy
+database{
+    configXml   = "/tmp/hibernate.cfg.xml"    // <<---- path to config file
+    revEngXml   = "/tmp/hibernate.reveng.xml" // <<---- path to reveng file
+}
+```
 
 by default database section are defined as:
 

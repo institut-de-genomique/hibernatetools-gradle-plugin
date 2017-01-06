@@ -60,4 +60,5 @@ class Database {
     String  basePackage = "com.project.database.model"
     String  revEngXml   = ""
     String  configXml   = ""
+    String  reverseStrategyClass = null
 }

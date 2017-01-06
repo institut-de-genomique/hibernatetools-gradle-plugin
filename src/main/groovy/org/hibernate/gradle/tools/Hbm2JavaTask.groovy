@@ -51,17 +51,23 @@ class Hbm2JavaTask  extends DefaultTask{
     }
 
     def hbm2java(final Project project){
+        //reversestrategy must not be provided if it is null
+        def preparedJdbcConfiguration = [
+                configurationfile:  "${config.hibernateConfigXml.path}",
+                revengfile:         "${config.hibernateRevEngXml.path}",
+                packagename:        "${project.database.basePackage}"
+        ]
+        if (project.database.reverseStrategyClass != null) {
+            preparedJdbcConfiguration.reversestrategy = "${project.database.reverseStrategyClass}"
+        }
+        
         project.ant {
             taskdef(name: "hibernatetool",
                     classname: "org.hibernate.tool.ant.HibernateToolTask",
                     classpath: config.classPath
             )
             hibernatetool( destdir : config.javaSrcGeneratedDir, templatepath : 'templates' ) {
-                jdbcconfiguration(
-                        configurationfile:  "${config.hibernateConfigXml.path}",
-                        revengfile:         "${config.hibernateRevEngXml.path}",
-                        packagename:        "${project.database.basePackage}"
-                )
+                jdbcconfiguration(preparedJdbcConfiguration)
                 hbm2java(
                         jdk5: true,
                         ejb3: true

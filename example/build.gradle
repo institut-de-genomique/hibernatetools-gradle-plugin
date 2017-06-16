@@ -45,4 +45,5 @@ import org.hibernate.gradle.tools.*
 database{
     catalog = [ "catalog1": new Schema("schema1", [".*"]), "catalog2": new Schema("schema2", ["tableX","tableY"]) ]
     url         = "jdbc:mysql://myDB.domain.fr"
+    dbName  = "database1"
 }

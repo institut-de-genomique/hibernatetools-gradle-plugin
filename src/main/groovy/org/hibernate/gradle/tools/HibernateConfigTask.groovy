@@ -111,7 +111,7 @@ class HibernateConfigTask extends DefaultTask {
     <session-factory>
         <property name="hibernate.dialect">${project.database.dialect}</property>
         <property name="hibernate.connection.driver_class">${project.database.driver}</property>
-        <property name="hibernate.connection.url">${project.database.url}:${project.database.port}</property>
+        <property name="hibernate.connection.url">${project.database.url}:${project.database.port}/${project.data.dbName}</property>
         <property name="hibernate.connection.username">${project.database.user}</property>
         <property name="hibernate.connection.password">${project.database.password}</property>
         <property name="hibernate.current_session_context_class">thread</property>

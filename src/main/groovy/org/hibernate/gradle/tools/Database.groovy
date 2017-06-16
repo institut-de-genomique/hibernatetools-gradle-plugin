@@ -55,6 +55,7 @@ class Database {
     String  password    = ""
     String  url         = "jdbc:mysql://127.0.0.1"
     Integer port        = 3306
+    String  dbName      = ""
     String  driver      = "com.mysql.jdbc.Driver"
     String  dialect     = "org.hibernate.dialect.MySQLDialect"
     String  basePackage = "com.project.database.model"

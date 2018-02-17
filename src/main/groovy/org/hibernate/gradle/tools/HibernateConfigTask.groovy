@@ -70,6 +70,8 @@ class HibernateConfigTask extends DefaultTask {
     }
 
     def checkDataBase(Project project){
+        if(project.database.user != null && project.database.password != null)
+            return;
         def console = System.console()
         if( console == null ){
             new SwingBuilder().edt {
@@ -127,7 +129,7 @@ class HibernateConfigTask extends DefaultTask {
         config.hibernateRevEngXml.append(
 """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-reverse-engineering
-    SYSTEM "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+    SYSTEM "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd">
 
 <hibernate-reverse-engineering>
 """

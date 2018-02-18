@@ -41,11 +41,24 @@ apply plugin: "org.hibernate.gradle.tools"
 Now you have only to configure the database, by using database section inside build.gradle file.
 Example:
 
+If using domain,
+
 ```groovy
 database{
     basePackage = "com.project.database.model"
     url         = "jdbc:mysql://myDB.domain.fr"
 }
+```
+
+If using host,
+
+```groovy
+database{
+    basePackage = "com.project.database.model"
+    url         = "jdbc:mysql://host"
+    dbName      = "myDB"
+}
+
 ```
 
 This plugin allow to specify multiple catalog using:
@@ -102,6 +115,7 @@ class Database {
     String  password    = ""
     String  url         = "jdbc:mysql://127.0.0.1"
     Integer port        = 3306
+    String  dbName      = ""
     String  driver      = "com.mysql.jdbc.Driver"
     String  dialect     = "org.hibernate.dialect.MySQLDialect"
     String  basePackage = "com.project.database.model"

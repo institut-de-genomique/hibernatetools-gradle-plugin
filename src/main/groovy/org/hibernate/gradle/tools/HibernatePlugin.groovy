@@ -56,18 +56,19 @@ class HibernatePlugin implements Plugin<Project>{
                                  )
             project.task("hibernate-config", type: HibernateConfigTask ) {
                     config = conf
-                    inputs.files conf.hibernateRevEngXml
+                    //inputs.files conf.hibernateRevEngXml
                     outputs.dir  conf.srcGeneratedDir
+                    outputs.files conf.hibernateRevEngXml, conf.hibernateConfigXml
             }
             project.task("hbm2java", type: Hbm2JavaTask,dependsOn: "hibernate-config" ) {
                 config = conf
                 inputs.files conf.hibernateRevEngXml
-                outputs.dir  conf.srcGeneratedDir
+                outputs.dir  conf.javaSrcGeneratedDir
             }
             project.task("hbm2dao", type: Hbm2DaoTask,dependsOn:"hbm2java"  ) {
                 config = conf
                 inputs.files conf.hibernateRevEngXml
-                outputs.dir  conf.srcGeneratedDir
+                outputs.dir  conf.javaSrcGeneratedDir
             }
             addGeneratedToSource(project)
         }

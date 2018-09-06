@@ -67,6 +67,11 @@ class HibernateConfigTask extends DefaultTask {
                 config.hibernateConfigXml.exists() || writeHibernateConfigFile(project)
             else
                 config.hibernateConfigXml = new File(project.database.configXml)
+            
+            if( project.database.hibernatePropertiesFile.isEmpty() )
+                config.hibernateProperties.exists() || writeHibernatePropertiesFile(project)
+            else
+                config.hibernateProperties = new File(project.database.hibernatePropertiesFile)
     }
 
     def checkDataBase(Project project){
@@ -122,6 +127,22 @@ class HibernateConfigTask extends DefaultTask {
 </hibernate-configuration>"""
         )
 
+    }
+    
+    
+    def writeHibernatePropertiesFile(Project project){
+        config.hibernateProperties.append(
+"""
+hibernate.dialect ${project.database.dialect}
+hibernate.connection.driver_class ${project.database.driver}
+hibernate.connection.url ${project.database.url}:${project.database.port}/${project.database.dbName}
+hibernate.connection.username ${project.database.user}
+hibernate.connection.password ${project.database.password}
+#hibernate.default_catalog ${project.database.dbName}
+"""
+        )
+//  <property name="hibernate.current_session_context_class">thread</property>
+//  <property name="hibernate.connection.zeroDateTimeBehavior">convertToNull</property>
     }
 
     def writeRevengConfigFile(final Project project){

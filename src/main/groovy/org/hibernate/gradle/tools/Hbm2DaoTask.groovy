@@ -56,6 +56,7 @@ class Hbm2DaoTask  extends DefaultTask{
         //reversestrategy must not be provided if it is null
         def preparedJdbcConfiguration = [
             configurationfile:  "${config.hibernateConfigXml.path}",
+            propertiesfile:     "${config.hibernateProperties.path}",
             revengfile:         "${config.hibernateRevEngXml.path}",
             packagename:        "${project.database.basePackage}"
         ]

@@ -61,5 +61,6 @@ class Database {
     String  basePackage = "com.project.database.model"
     String  revEngXml   = ""
     String  configXml   = ""
+    String  hibernatePropertiesFile = ""
     String  reverseStrategyClass = null
 }

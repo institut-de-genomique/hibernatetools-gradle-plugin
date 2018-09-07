@@ -46,7 +46,7 @@ class HibernatePlugin implements Plugin<Project>{
         project.repositories.mavenCentral()
         project.afterEvaluate {
             def configuration = project.configurations.maybeCreate('reveng')
-            configuration.dependencies.add(project.dependencies.create('org.hibernate:hibernate-tools:5.2.0.Final'))
+            configuration.dependencies.add(project.dependencies.create('org.hibernate:hibernate-tools:5.3.4.Final'))
             configuration.dependencies.add(project.dependencies.create('org.slf4j:slf4j-simple:1.7.5'))
             configuration.extendsFrom(project.configurations.findByName('compile'))
             configuration.extendsFrom(project.configurations.findByName('runtime'))
@@ -56,18 +56,19 @@ class HibernatePlugin implements Plugin<Project>{
                                  )
             project.task("hibernate-config", type: HibernateConfigTask ) {
                     config = conf
-                    inputs.files conf.hibernateRevEngXml
+                    //inputs.files conf.hibernateRevEngXml
                     outputs.dir  conf.srcGeneratedDir
+                    outputs.files conf.hibernateRevEngXml, conf.hibernateConfigXml, conf.hibernateProperties
             }
             project.task("hbm2java", type: Hbm2JavaTask,dependsOn: "hibernate-config" ) {
                 config = conf
-                inputs.files conf.hibernateRevEngXml
-                outputs.dir  conf.srcGeneratedDir
+                inputs.files conf.hibernateRevEngXml, conf.hibernateConfigXml, conf.hibernateProperties
+                outputs.dir  conf.javaSrcGeneratedDir
             }
             project.task("hbm2dao", type: Hbm2DaoTask,dependsOn:"hbm2java"  ) {
                 config = conf
-                inputs.files conf.hibernateRevEngXml
-                outputs.dir  conf.srcGeneratedDir
+                inputs.files conf.hibernateRevEngXml, conf.hibernateConfigXml, conf.hibernateProperties
+                outputs.dir  conf.javaSrcGeneratedDir
             }
             addGeneratedToSource(project)
         }
@@ -85,6 +86,7 @@ class HibernatePlugin implements Plugin<Project>{
 class Config{
     def File   hibernateRevEngXml
     def File   hibernateConfigXml
+    def File   hibernateProperties
     def File   srcGeneratedDir
     def File   javaSrcGeneratedDir
     def File   resourcesSrcGeneratedDir
@@ -96,6 +98,7 @@ class Config{
         this.resourcesSrcGeneratedDir   = new File(srcGeneratedDir,"resources")
         this.hibernateRevEngXml         = new File(resourcesSrcGeneratedDir,"hibernate.reveng.xml")
         this.hibernateConfigXml         = new File(resourcesSrcGeneratedDir,"hibernate.cfg.xml")
+        this.hibernateProperties        = new File(resourcesSrcGeneratedDir,"hibernate.properties")
         this.classPath                  = classPath
     }
 }
